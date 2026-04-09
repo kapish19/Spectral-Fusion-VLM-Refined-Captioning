@@ -1,0 +1,26 @@
+# Basic config file. Edit paths before running scripts.
+dataset:
+  coco_root: "/content/drive/MyDrive/image_captioning/datasets/coco2014"
+  train_images: "/content/drive/MyDrive/image_captioning/datasets/coco2014/train2014"
+  val_images: "/content/drive/MyDrive/image_captioning/datasets/coco2014/val2014"
+  annotations: "/content/drive/MyDrive/image_captioning/datasets/coco2014/annotations"
+
+model:
+  feature_extraction_model: "xception"
+  model_dir: "trained_model_xception"
+  feature_npy_suffix: "_xception.npy"
+
+training:
+  num_examples: 20000
+  batch_size: 64
+  epochs: 20
+  learning_rate: 0.001
+
+yolo:
+  config_path: "src/yolov4.cfg"
+  names_path: "src/coco.names"
+  weights_path: "/content/drive/MyDrive/image_captioning/weights/yolov4.weights"
+
+output:
+  save_dir: "models/trained_model_xception"
+  results_json: "results/results.json"
