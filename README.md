@@ -50,20 +50,36 @@ This framework improves upon classical CNN+RNN architectures, resulting in impro
 
 ```mermaid
 flowchart TD
+
     A[Input Image]
-    A --> B[YOLOv4 Encoder]
-    A --> C[Xception Encoder]
-    B --> D[Bahdanau Attention]
-    C --> E[Bahdanau Attention]
+
+    %% Encoders
+    A --> B[YOLOv4 Encoder (Object Detection)]
+    A --> C[Xception Encoder (Scene Classification)]
+
+    %% Attention
+    B --> D[Bahdanau Attention (Object Branch)]
+    C --> E[Bahdanau Attention (Scene Branch)]
+
     D --> F[Context Cd]
     E --> G[Context Cc]
-    F --> H[DCT-Based Fusion]
+
+    %% Fusion
+    F --> H[DCT-Based Frequency Fusion]
     G --> H
-    H --> I[Ffused]
-    I --> J[FFT-Based Spectral Attention]
-    J --> K[GRU Decoder]
+
+    H --> I[Fused Features (Spatial Domain)]
+
+    %% Spectral Attention
+    I --> J[FFT-Based Spectral Attention (O(N log N))]
+
+    %% Captioning
+    J --> K[GRU Caption Decoder (Draft Caption)]
+
+    %% Refinement
     K --> L[LLaVA Refinement]
-    L --> M[Final Caption]
+    L --> M[Final Refined Caption]
+    
 ## Results
 
 Incremental evaluation on the MSCOCO-2014 Karpathy test split. Each row adds one component on top of the previous.
