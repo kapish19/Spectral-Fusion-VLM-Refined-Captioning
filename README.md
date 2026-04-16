@@ -46,48 +46,24 @@ This framework improves upon classical CNN+RNN architectures, resulting in impro
 * **GRU Caption Decoder:** Generates draft captions.
 * **VLM Refinement:** Multimodal LLM (e.g., MiniGPT-4/LLaVA) improves caption factuality and grounding.
 
+## Image Captioning Pipeline Architecture
+
+```mermaid
 flowchart TD
-
     A[Input Image]
-
-    %% ================= Encoders =================
-    subgraph Encoders
-        B[YOLOv4 Encoder<br/>(Object Detection)<br/>Fd ∈ R^(Nd × Dd)]
-        C[Xception Encoder<br/>(Scene Classification)<br/>Fc ∈ R^(Nc × Dc)]
-    end
-
-    %% ================= Attention =================
-    subgraph Attention Mechanism
-        D[Bahdanau Attention<br/>(Object Branch)]
-        E[Bahdanau Attention<br/>(Scene Branch)]
-        F[Context Cd]
-        G[Context Cc]
-    end
-
-    %% ================= Fusion =================
-    subgraph Frequency Fusion
-        H[DCT-Based Fusion<br/>2D DCT → Low-Freq Preserve<br/>Element-wise Multiply → IDCT]
-        I[Ffused (Spatial Domain)]
-        J[FFT-Based Spectral Attention<br/>1D FFT → Learnable Wspec<br/>Element-wise Multiply → IFFT<br/>O(N log N)]
-    end
-
-    %% ================= Captioning =================
-    subgraph Caption Generation
-        K[GRU Caption Decoder<br/>Draft Caption]
-        L[LLaVA Refinement<br/>Inputs:<br/>• Draft Caption<br/>• YOLO Detections<br/>• Image Embeddings]
-        M[Final Refined Caption]
-    end
-
-    %% Flow
-    A --> B
-    A --> C
-
-    B --> D --> F --> H
-    C --> E --> G --> H
-
-    H --> I --> J --> K --> L --> M
----
-
+    A --> B[YOLOv4 Encoder]
+    A --> C[Xception Encoder]
+    B --> D[Bahdanau Attention]
+    C --> E[Bahdanau Attention]
+    D --> F[Context Cd]
+    E --> G[Context Cc]
+    F --> H[DCT-Based Fusion]
+    G --> H
+    H --> I[Ffused]
+    I --> J[FFT-Based Spectral Attention]
+    J --> K[GRU Decoder]
+    K --> L[LLaVA Refinement]
+    L --> M[Final Caption]
 ## Results
 
 Incremental evaluation on the MSCOCO-2014 Karpathy test split. Each row adds one component on top of the previous.
