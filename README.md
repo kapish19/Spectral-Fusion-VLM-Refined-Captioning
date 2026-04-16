@@ -53,33 +53,28 @@ flowchart TD
 
     A[Input Image]
 
-    %% Encoders
-    A --> B[YOLOv4 Encoder (Object Detection)]
-    A --> C[Xception Encoder (Scene Classification)]
+    A --> B[YOLOv4 Encoder]
+    A --> C[Xception Encoder]
 
-    %% Attention
-    B --> D[Bahdanau Attention (Object Branch)]
-    C --> E[Bahdanau Attention (Scene Branch)]
+    B --> D[Object Attention]
+    C --> E[Scene Attention]
 
     D --> F[Context Cd]
     E --> G[Context Cc]
 
-    %% Fusion
-    F --> H[DCT-Based Frequency Fusion]
+    F --> H[DCT Fusion]
     G --> H
 
-    H --> I[Fused Features (Spatial Domain)]
+    H --> I[Fused Features]
 
-    %% Spectral Attention
-    I --> J[FFT-Based Spectral Attention (O(N log N))]
+    I --> J[FFT Spectral Attention]
 
-    %% Captioning
-    J --> K[GRU Caption Decoder (Draft Caption)]
+    J --> K[GRU Decoder]
 
-    %% Refinement
     K --> L[LLaVA Refinement]
-    L --> M[Final Refined Caption]
-    
+
+    L --> M[Final Caption]
+```
 ## Results
 
 Incremental evaluation on the MSCOCO-2014 Karpathy test split. Each row adds one component on top of the previous.
