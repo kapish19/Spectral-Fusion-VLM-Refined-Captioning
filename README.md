@@ -36,6 +36,8 @@ An instruction-tuned Vision-Language Model (LLaVA) acts as a post-generation edi
 
 
 ## Key Features & Architecture
+## Architecture Diagram
+![Architecture](images/finalarch.png)
 This framework improves upon classical CNN+RNN architectures, resulting in improved performance on the MSCOCO-2014 dataset.
 
 ### Key Contributions
@@ -48,33 +50,8 @@ This framework improves upon classical CNN+RNN architectures, resulting in impro
 
 ## Image Captioning Pipeline Architecture
 
-```mermaid
-flowchart TD
+![Pipeline](images/pipeline.png)
 
-    A[Input Image]
-
-    A --> B[YOLOv4 Encoder]
-    A --> C[Xception Encoder]
-
-    B --> D[Object Attention]
-    C --> E[Scene Attention]
-
-    D --> F[Context Cd]
-    E --> G[Context Cc]
-
-    F --> H[DCT Fusion]
-    G --> H
-
-    H --> I[Fused Features]
-
-    I --> J[FFT Spectral Attention]
-
-    J --> K[GRU Decoder]
-
-    K --> L[LLaVA Refinement]
-
-    L --> M[Final Caption]
-```
 ## Results
 
 Incremental evaluation on the MSCOCO-2014 Karpathy test split. Each row adds one component on top of the previous.
@@ -91,6 +68,27 @@ Incremental evaluation on the MSCOCO-2014 Karpathy test split. Each row adds one
 The full model achieves a **59.1% improvement in BLEU-4** and **48.4% in CIDEr** over the baseline. Absolute values are lower than full-dataset benchmarks due to the 20k training subset, but relative trends are consistent.
 
 ---
+## Results Visualization
+
+### Graph 1: Model Performance Comparison
+![Graph1](images/graph1.png)
+Comparison of Baseline, Our Model, Paper 1, and Paper 2 across all captioning metrics.
+
+### Graph 2: Ablation Study: Metric Progression by Component
+![Graph2](images/graph2.png)
+Performance progression after adding YOLO, Dual Attention, DCT Fusion, Spectral Attention, and LLM Refinement.
+
+### Graph 3: Comparison of Attention Mechanisms
+![Graph3](images/graph5.png)
+Comparison between Standard Bahdanau Attention and Spectral (FFT-based) Attention.
+
+### Graph 4: Impact of LLM Refinement on Caption Quality
+![Graph4](images/graph4.png)
+Comparison of captioning scores before and after LLM refinement.
+
+### Graph 5: Relative Improvement Over Baseline (%)
+![Graph5](images/graph3.png)
+Percentage improvement of our model over the baseline across evaluation metrics.
 
 ## Codebase Structure
 
@@ -187,9 +185,8 @@ python src/improv_imgcap.py
 
 ## Base Repository
 
-This work extends the baseline architecture from [abdelhadie-almalla/image_captioning](https://github.com/abdelhadie-almalla/image_captioning), enhancing the original CNN-GRU pipeline with dual attention, frequency-domain fusion, spectral attention, and instruction-tuned VLM refinement.
+This work extends the baseline architecture from [Original Paper](https://doi.org/10.1186/s40537-022-00571-w), enhancing the original CNN-GRU pipeline with dual attention, frequency-domain fusion, spectral attention, and instruction-tuned VLM refinement.
 
 ---
 
 *Netaji Subhas University of Technology, Delhi*
-
