@@ -37,7 +37,7 @@ An instruction-tuned Vision-Language Model (LLaVA) acts as a post-generation edi
 
 ## Key Features & Architecture
 ## Architecture Diagram
-![Architecture](images/finalarch.png)
+![Architecture](images/finalarch.jpeg)
 This framework improves upon classical CNN+RNN architectures, resulting in improved performance on the MSCOCO-2014 dataset.
 
 ### Key Contributions
@@ -50,7 +50,7 @@ This framework improves upon classical CNN+RNN architectures, resulting in impro
 
 ## Image Captioning Pipeline Architecture
 
-![Pipeline](images/pipeline.png)
+![Pipeline](images/pipeline.jpeg)
 
 ## Results
 
